@@ -5,9 +5,11 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 
+const emailMatch = [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor agregue una dirección de correo electrónico válida'];
+
 const UserSchema = new Schema({
-  email: { type: String, unique: true, lowercase: true },
-  displayName: String,
+  email: { type: String, required: true, unique: true, lowercase: true, match: emailMatch },
+  displayName: {type: String, required: "Campo requerido" },
   avatar: String,
   password: { type: String, select: false },
   signupDate: { type: Date, default: Date.now() },
