@@ -1,9 +1,16 @@
 'use strict'
+const mongoose = require('mongoose')
+const app = require('./app')
+const config = require('./config')
 
-const express = require('express');
+mongoose.Promise = global.Promise;
+mongoose.connect(config.db, (error, res) => {
+  if (error) {
+    return console.log(`Error al conectar a la base de datos: ${error}`)
+  }
+  console.log('Conexión a la base de datos establecida...')
 
-const app = express();
-
-app.listen(3000, () => {
-    console.log('API REST Run http://localhost:3000')
+  app.listen(config.port, () => {
+    console.log(`API REST corriendo en http://localhost:${config.port}`)
+  });
 });
